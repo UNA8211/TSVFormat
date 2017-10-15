@@ -23,12 +23,17 @@ public class HandleFiles {
     private BufferedWriter bw = null;
     private FileWriter fw = null;
 
-    String path;
-    String file;
+    private boolean trimmed;
+    private int trimAmount = 20000;
 
-    public HandleFiles(String file, String path) throws IOException {
+    private String path;
+    private String file;
+
+    public HandleFiles(String file, String path, boolean trimmed) throws IOException {
         this.file = file;
         this.path = path;
+        this.trimmed = trimmed;
+
         fr = new FileReader(new File(path + file));
         br = new BufferedReader(fr);
     }
@@ -40,9 +45,18 @@ public class HandleFiles {
         String currentLine;
 
         // Convert file to string
-        while ((currentLine = br.readLine()) != null) {
-            output.append(currentLine);
-            output.append("\n");
+        if (trimmed) {
+            int i = 0;
+            while (((currentLine = br.readLine()) != null) && (i != trimAmount)) {
+                output.append(currentLine);
+                output.append("\n");
+                i++;
+            }
+        } else {
+            while ((currentLine = br.readLine()) != null) {
+                output.append(currentLine);
+                output.append("\n");
+            }
         }
         return output.toString();
     }
@@ -53,7 +67,7 @@ public class HandleFiles {
             fw = new FileWriter(path + "formatted_" + file);
             bw = new BufferedWriter(fw);
             bw.write(convert);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

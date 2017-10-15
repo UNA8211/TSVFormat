@@ -20,10 +20,11 @@ public class Separator {
         
         String fileName = "data1.tsv";
         String path = "C:\\Users\\Ryan Brand\\Desktop\\data\\";
+        boolean trimmed = true;
         boolean multivalued = true;
         int[] cols = {9, 1};
         
-        HandleFiles file = new HandleFiles(fileName, path);
+        HandleFiles file = new HandleFiles(fileName, path, trimmed);
         
         FieldSeparator fs = new FieldSeparator(file.convertFile());
         file.generateNewCSV(fs.separate(multivalued, cols));
