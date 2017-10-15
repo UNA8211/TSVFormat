@@ -5,9 +5,7 @@
  */
 package separator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  *
@@ -59,9 +57,7 @@ public class FieldSeparator {
 
         // Iterate over each split multivalued attr
         for (String value : values) {
-            if (value.equals("\\n") || value.equals("\\N")) {
-                sb.append("NONE" + "\t" + merged + "\n");
-            } else {
+            if (!value.equals("\\n") || !value.equals("\\N")) {
                 sb.append(value + "\t" + merged + "\n");
             }
         }
